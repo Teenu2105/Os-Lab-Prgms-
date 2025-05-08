@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Buttons with C Programs</title>
+<style>
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+body {
+font-family: Arial, sans-serif;
+background-color: #f4f4f4;
+display: flex;
+justify-content: flex-start;
+align-items: flex-start;
+flex-direction: column;
+height: 100%;
+padding: 10px;
+overflow-y: auto; /* Allow scrolling */
+}
+.container {
+width: 100%;
+max-width: 600px;
+margin: auto;
+display: flex;
+flex-direction: column;
+gap: 20px;
+flex-grow: 1; /* Allow container to grow and fill available space */
+}
+/* Blue button styles with glowing effect */
+.button {
+padding: 12px 25px;
+font-size: 18px;
+background-color: #0364cb; /* Blue color */
+color: white;
+border: none;
+border-radius: 8px;
+cursor: pointer;
+box-shadow: 0 0 5px #007BFF;
+transition: all 0.3s ease-in-out;
+}
+/* Glowing effect when hovering over the button */
+.button:hover {
+background-color: #033e7c; /* Darker blue for hover */
+box-shadow: 0 0 20px #28a0d7, 0 0 30px #2e93ff, 0 0 40px #007BFF; /* Glowing
+effect */
+transform: scale(1.05); /* Slightly enlarges the button */
+}
+/* Content block styles */
+.content {
+display: none;
+margin-top: 10px;
+padding: 20px;
+background-color: #dfdbdb;
+border-radius: 8px;
+overflow: auto; /* Make sure content is scrollable if needed */
+max-height: 60vh; /* Limit the max height to avoid pushing page content off-screen */
+}
+/* Styling the program code block */
+.content pre {
+font-size: 14px;
+font-family: Arial;
+white-space: pre-wrap;
+word-wrap: break-word;
+color: #000000;
+margin: 0;
+}
+/* Styling for the links */
+.content a {
+color:  #336699;
+text-decoration: none;
+}
+.content a:hover {
+text-decoration: underline;
+}
+/* Active content when shown */
+.active {
+display: block;
+}
+</style>
+
+
+
+</head>
+<body>
+<div class="container">
+<button class="button" onclick="showProgram('palindrome')">01 Check the number is Palindrome or not</button>
+<div id="palindrome" class="program-container content">
+<pre>
+#!/bin/bash
+echo "Enter a number: " 
+read number
+reverse=0 
+original=$number
+while [ $number -ne 0 ] 
+do
+      remainder=$(( $number % 10 )) 
+      reverse=$(( $reverse * 10 + $remainder )) 
+      number=$(( $number / 10 ))
+done
+if [ $original -eq $reverse ] 
+then
+      echo "$original is a palindrome." 
+else
+      echo "$original is not a palindrome."
+fi
+</pre>
+</div>
+
+<div class="container">
+<button class="button" onclick="showProgram('primeno')">02. Prime number b/w 2 Nos</button>
+<div id="primeno" class="program-container content">
+<pre>
+#!/bin/bash
+for num in {2..100} 
+do
+     is_prime=true
+     for (( i=2; i &lt:<num; i++ )) 
+     do
+         if [ $(($num%$i)) -eq 0 ] 
+        then
+        fi
+    done
+    is_prime=false 
+    break
+    if $is_prime 
+    then
+          echo $num
+    fi
+done
+</pre>
+</div>
+
+<div class="container">
+<button class="button" onclick="showProgram('sum')">03. Sum of digits</button>
+<div id="sum" class="program-container content">
+<pre>
+
+echo "Enter a number" 
+read num
+sum=0
+while [ $num -gt 0 ] 
+do
+     mod=$((num % 10)) 
+     sum=$((sum + mod)) 
+     num=$((num / 10))
+done
+echo $sum
+
+</pre>
+</div>
+
+
+<div class="container">
+<button class="button" onclick="showProgram('linuxcmd')">04. Linux command using case</button>
+<div id="linuxcmd" class="program-container content">
+<pre>
+#!/bin/bash 
+while true; do
+echo "\nChoose a command to execute:" 
+echo "1) List files (ls)"
+echo "2) Show current directory (pwd)" 
+echo "3) Show calendar (cal)"
+echo "4) Show date and time (date)" 
+echo "5) Show disk usage (df -h)"
+echo "6) Show memory usage (free -h)" 
+echo "7) Show logged-in users (who)" 
+echo "8) Show system uptime (uptime)"
+echo "9) Show network configuration (ifconfig or ip a)" 
+echo "10) Exit"
+read -p "Enter your choice (1-10): " choice 
+case $choice in
+1) ls -l ;;
+2) pwd ;;
+3) cal ;;
+4) date ;;
+5) df -h ;;
+6) free -h ;;
+7) who ;;
+8) uptime ;;
+9)
+    if command -v ifconfig &> /dev/null; then 
+        ifconfig
+        else
+         ip a
+    fi
+;;
+10) echo "Exiting..."; break ;;
+*) echo "Invalid choice! Please select a valid option." ;; 
+esac
+done
+</pre>
+</div>
+
+
+<div class="container">
+<button class="button" onclick="showProgram('rwe')">05.  List of all file in Current directory </button>
+<div id="rwe" class="program-container content">
+<pre>
+#!/bin/bash
+echo "Files with read, write, and execute permissions for the user:" 
+for file in *; do
+# Check if it's a regular file and if the user has rwx permissions
+if [ -f "$file" ] && [ -r "$file" ] && [ -w "$file" ] && [ -x "$file" ]; then 
+echo "$file"
+fi 
+done
+</pre>
+</div>
+
+
+
+
+<div class="container">
+<button class="button" onclick="showProgram(‘cd')">06. Copying a file within the current directory </button>
+<div id="cd" class="program-container content">
+<pre>
+#!/bin/bash
+read -p "Enter the source file name: " src 
+if [ ! -f "$src" ]; then
+echo "Error: File '$src' does not exist!" 
+exit 1
+fi
+read -p "Enter the destination file name: " dest 
+cp "$src" "$dest"
+if [ $? -eq 0 ]; then
+echo "File copied successfully: '$src' → '$dest'" 
+else
+echo "Error: Failed to copy file!"
+fi
+
+</pre>
+</div>
+
+
+<div class="container">
+<button class="button" onclick="showProgram('dd')">07. Copying a file blw 2 directories</button>
+<div id="dd" class="program-container content">
+<pre>
+
+#!/bin/bash
+# Prompt user to enter source and destination
+echo "Enter the source file path:"
+read source_file
+echo "Enter the destination directory path:"
+read dest_dir
+
+# Check if the source file exists
+if [ -f "$source_file" ]; then
+
+ # Check if destination directory exists
+ if [ -d "$dest_dir" ]; then
+
+ dest_file="$dest_dir/$(basename "$source_file")"
+
+ # Check if the file already exists in destination
+ if [ -f "$dest_file" ]; then
+ echo "Warning: File already exists in the destination."
+ echo "Do you want to overwrite it? (y/n)"
+ read answer
+ if [ "$answer" != "y" ]; then
+ echo "Copy cancelled."
+ exit 1
+ fi
+ fi
+
+ # Proceed with copying
+ cp "$source_file" "$dest_dir"
+ echo "File copied successfully to $dest_dir"
+ else
+ echo "Error: Destination directory does not exist."
+ fi
+else
+ echo "Error: Source file does not exist."
+fi
+
+</pre>
+</div>
+
+
+<div class="container">
+<button class="button" onclick="showProgram('uniqiee')">08. Displaying common and unique enteries</button>
+<div id="uniqiee" class="program-container content">
+<pre>
+#!/bin/bash
+# Create two data files
+echo -e "apple\nbanana\ncherry\ndate" > file1.txt
+echo -e "banana\ndate\nfig\ngrape" > file2.txt
+echo "=== File1 Contents ==="
+cat file1.txt
+echo "=== File2 Contents ==="
+cat file2.txt
+# Sort the files for comparison
+sort file1.txt -o file1.txt
+sort file2.txt -o file2.txt
+# Display unique and common entries
+echo -e "\n=== Unique to file1.txt ==="
+comm -23 file1.txt file2.txt
+echo -e "\n=== Unique to file2.txt ==="
+comm -13 file1.txt file2.txt
+echo -e "\n=== Common entries ==="
+comm -12 file1.txt file2.txt
+</pre>
+</div>
+
+
+<div class="container">
+<button class="button" onclick="showProgram('vowels')">09. Vowels in a Stringt</button>
+<div id="vowels" class="program-container content">
+<pre>
+#!/bin/bash
+# Prompt user for input string
+read -p "Enter a string: " input_string
+
+# Convert to lowercase to count both uppercase and lowercase vowels
+lower_string=$(echo "$input_string" | tr 'A-Z' 'a-z')
+
+# Count vowels using grep and wc
+vowel_count=$(echo "$lower_string" | grep -o '[aeiou]' | wc -l)
+echo "Number of vowels in the given string: $vowel_count”
+</pre>
+</div>
+
+
+<div class="container">
+<button class="button" onclick="showProgram('ul')">10. Converting Uppercase to Lowercase t</button>
+<div id="ul" class="program-container content">
+<pre>
+#!/bin/bash
+# Prompt user for input string
+read -p "Enter a string: " input_string
+
+# Convert uppercase to lowercase and vice versa
+converted_string=$(echo "$input_string" | tr 'a-zA-Z' 'A-Za-z')
+echo "Converted string: $converted_string”
+</pre>
+</div>
+
+
+
+
+<div class="container">
+<button class="button" onclick="showProgram('pm')">11. Pattern Marching in a given file</button>
+<div id="pm" class="program-container content">
+<pre>
+#!/bin/bash
+# Prompt the user to enter a word to search
+echo "Enter the word to search:"
+read word
+
+# Prompt the user to enter the file name
+echo "Enter the file name to search in:"
+read filename
+
+# Check if the file exists
+if [ -f "$filename" ]; then
+ echo "Matching lines in '$filename' containing '$word':"
+ grep "$word" "$filename"
+else
+ echo "Error: File '$filename' does not exist."
+fi
+</pre>
+</div>
+
+
+<div class="container">
+<button class="button" onclick="showProgram('fact')">12. Factorial of a Number</button>
+<div id="fact" class="program-container content">
+<pre>
+#!/bin/bash
+
+echo "Enter a Number"
+read num
+
+fact=1  
+
+for ((i=1; i<=num; i++))
+do
+   fact=$((fact * i))  
+done
+echo "Factorial of $num is $fact”
+</pre>
+</div>
+
+
+<div class="container">
+<button class="button" onclick="showProgram('zombie')">13. Demonstration of zombie and Orphan process</button>
+<div id="zombie" class="program-container content">
+<pre>
+#!/bin/bash
+while true
+do
+echo "======================================="
+ echo " Zombie and Orphan Process Demo"
+ echo "======================================="
+ echo "1. Demonstrate Zombie Process"
+ echo "2. Demonstrate Orphan Process"
+ echo "3. Exit"
+ echo "======================================="
+ read -p "Enter your choice: " choice
+ case $choice in
+ 1)
+ echo ""
+ echo "Creating Zombie Process..."
+ echo "------------------------------"
+ # Fork a background child process that exits immediately
+ (
+ echo "Child (Zombie) PID: $$"
+ exit 0
+ ) &
+ # Get the PID of the background process
+ zombie_pid=$!
+ echo "Parent Process PID: $$"
+ echo "Waiting before reaping child..."
+ # Sleep to give time for child to exit and become zombie
+ sleep 5
+echo "Checking process list (look for Z status)..."
+ ps -l | grep $zombie_pid
+echo "Now reaping the zombie..."
+ wait $zombie_pid
+ echo "Zombie reaped."
+ echo ""
+ ;;
+ 2)
+ echo ""
+ echo "Creating Orphan Process..."
+ echo "------------------------------"
+ (
+ echo "Child (Orphan) PID: $$"
+ sleep 10
+ echo "Child (Orphan) process's new PPID: $(ps -o ppid= -p $$)"
+ ) &
+ echo "Parent process exiting immediately..."
+ exit
+ ;;
+ 3)
+ echo "Exiting..."
+ break
+ ;;
+ *)
+ echo "Invalid choice. Please try again."
+ ;;
+ esac
+echo ""
+ read -p "Press Enter to continue..."
+ clear
+done
+</pre>
+</div>
+<script>
+function showProgram(programId) {
+// Hide all program contents
+const contents = document.querySelectorAll('.program-container');
+contents.forEach(content => {
+content.classList.remove('active');
+});
+// Show the selected program content
+const selectedProgram = document.getElementById(programId);
+selectedProgram.classList.add('active');
+}
+</script>
+</body>
+</html>
+
+
+
+
+
+
+  
