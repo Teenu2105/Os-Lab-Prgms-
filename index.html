@@ -115,20 +115,21 @@ fi
 <div id="primeno" class="program-container content">
 <pre>
 #!/bin/bash
-for num in {2..100} 
+
+for num in {2..100}
 do
-     is_prime=true
-     for (( i=2; i &lt;num; i++ )) 
-     do
-         if [ $(($num%$i)) -eq 0 ] 
+    is_prime=true
+    for (( i=2; i*i<=num; i++ ))
+    do
+        if (( num % i == 0 ))
         then
+            is_prime=false
+            break
         fi
     done
-    is_prime=false 
-    break
-    if $is_prime 
+    if $is_prime
     then
-          echo $num
+        echo $num
     fi
 done
 </pre> 
